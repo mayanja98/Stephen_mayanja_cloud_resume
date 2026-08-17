@@ -1,0 +1,63 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test_and_scan:
+    name: Test and SonarQube Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build and Test Backend
+        run: |
+          cd backend
+          ./mvnw test
+      # Placeholder for SonarQube Scan
+      # - name: SonarQube Scan
+      #   run: ./mvnw sonar:sonar
+
+  terraform:
+    name: Terraform Validate and Plan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./terraform
+      - name: Terraform Format
+        run: terraform fmt -check
+        working-directory: ./terraform
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: ./terraform
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: ./terraform
+
+  deploy:
+    name: Deploy to AWS
+    needs: [test_and_scan, terraform]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+      - name: Build Backend Docker Image
+        run: docker build -t cloud-resume-backend .
+      # Placeholder for AWS Deployment Steps (Terraform apply, S3 Sync, EC2 Docker run)

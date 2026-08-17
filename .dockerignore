@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+target/
+*.class
+.idea/
+*.iml
+.vscode/
+frontend/
+terraform/
+.github/
+README.md

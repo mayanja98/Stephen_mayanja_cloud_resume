@@ -4,6 +4,6 @@ output "frontend_url" {
 }
 
 output "api_url" {
-  value = "http://api.example.com"
-  description = "Placeholder for API URL"
+  value       = "http://${aws_lb.backend.dns_name}"
+  description = "Public URL of the Backend API Load Balancer"
 }

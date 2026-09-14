@@ -12,6 +12,7 @@ function Experience() {
         </div>
         <ul className="experience-bullets">
           <li>Architected and deployed a highly available cloud infrastructure using <strong>Terraform</strong> to provision AWS ECS Fargate, Application Load Balancers, ECR, CloudFront, and DynamoDB.</li>
+          <li>Evaluated <strong>Kubernetes</strong>, <strong>Helm</strong>, and <strong>Ansible</strong> for orchestration and configuration management, but strategically elected to use <strong>Docker</strong> with ECS Fargate to minimize operational overhead and optimize cloud costs.</li>
           <li>Engineered a secure CI/CD pipeline using <strong>GitHub Actions</strong>, integrating <strong>AWS OIDC</strong> for keyless authentication and automated zero-downtime container deployments.</li>
           <li>Implemented "Shift-Left" DevSecOps practices by integrating <strong>SonarQube Cloud</strong> into the pipeline for automated Static Application Security Testing (SAST) and quality gates.</li>
           <li>Containerized a Spring Boot REST API using <strong>Docker</strong> multi-stage builds and streamlined local development using <strong>Docker Compose</strong>.</li>

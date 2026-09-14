@@ -1,8 +1,8 @@
 # DynamoDB Table for visitor counter
 resource "aws_dynamodb_table" "visitor_counter" {
-  name           = "visitor-counter"
-  billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "id"
+  name         = "visitor-counter"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "id"
 
   attribute {
     name = "id"
@@ -52,7 +52,7 @@ resource "aws_amplify_app" "frontend" {
 resource "aws_amplify_branch" "main" {
   app_id      = aws_amplify_app.frontend.id
   branch_name = "main"
-  
+
   framework = "React"
   stage     = "PRODUCTION"
 }

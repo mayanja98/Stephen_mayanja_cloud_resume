@@ -1,8 +1,8 @@
 # GitHub OIDC Identity Provider
 resource "aws_iam_openid_connect_provider" "github" {
-  url             = "https://token.actions.githubusercontent.com"
-  client_id_list  = ["sts.amazonaws.com"]
-  
+  url            = "https://token.actions.githubusercontent.com"
+  client_id_list = ["sts.amazonaws.com"]
+
   # Standard thumbprints for GitHub Actions' certificate
   thumbprint_list = [
     "6938fd4d98bab03faadb97b34396831e3780aea1",
@@ -26,10 +26,10 @@ resource "aws_iam_role" "github_actions" {
         Condition = {
           # Temporary debug: completely bypass sub claim checking to see if AWS is rejecting due to casing
           StringLike = {
-            "token.actions.githubusercontent.com:sub": "repo:*"
+            "token.actions.githubusercontent.com:sub" : "repo:*"
           }
           StringEquals = {
-            "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+            "token.actions.githubusercontent.com:aud" : "sts.amazonaws.com"
           }
         }
       }

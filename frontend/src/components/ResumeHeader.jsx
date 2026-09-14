@@ -12,6 +12,9 @@ function ResumeHeader() {
       <p>
         LinkedIn | <a href="https://www.linkedin.com/in/stephenmayanja/" target="_blank" rel="noopener noreferrer">https://www.linkedin.com/in/stephenmayanja/</a>
       </p>
+      <p>
+        GitHub | <a href="https://github.com/mayanja98/Stephen_mayanja_cloud_resume" target="_blank" rel="noopener noreferrer">https://github.com/mayanja98/Stephen_mayanja_cloud_resume</a>
+      </p>
     </div>
   );
 }

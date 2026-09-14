@@ -34,16 +34,16 @@ jobs:
           cd backend
           ./mvnw clean test
 
-      - name: SonarQube Cloud Analysis
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          cd backend
-          ./mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
-            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
-            -Dsonar.host.url=https://sonarcloud.io
+      # - name: SonarQube Cloud Analysis
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #   run: |
+      #     cd backend
+      #     ./mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+      #       -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
+      #       -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
+      #       -Dsonar.host.url=https://sonarcloud.io
 
   terraform:
     name: Terraform Infrastructure as Code

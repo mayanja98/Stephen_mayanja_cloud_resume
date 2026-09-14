@@ -101,6 +101,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build, tag, and push docker image to Amazon ECR
+        id: build-image
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: cloud-resume-backend
@@ -108,9 +109,24 @@ jobs:
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-          docker tag $REGISTRY/$REPOSITORY:$IMAGE_TAG $REGISTRY/$REPOSITORY:latest
-          docker push $REGISTRY/$REPOSITORY:latest
+          echo "image=$REGISTRY/$REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-      - name: Deploy to ECS Fargate
+      - name: Download current ECS task definition
         run: |
-          aws ecs update-service --cluster cloud-resume-cluster --service cloud-resume-backend-service --force-new-deployment --region ${{ env.AWS_REGION }}
+          aws ecs describe-task-definition --task-definition cloud-resume-backend-task --query taskDefinition > task-definition.json
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: backend-container
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: cloud-resume-backend-service
+          cluster: cloud-resume-cluster
+          wait-for-service-stability: true

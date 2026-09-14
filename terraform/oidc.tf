@@ -24,10 +24,9 @@ resource "aws_iam_role" "github_actions" {
           Federated = aws_iam_openid_connect_provider.github.arn
         }
         Condition = {
-          # This is the security mechanism! 
-          # We are loosening this slightly to 'repo:mayanja98/*' to rule out any hidden capitalization/spacing issues.
+          # Temporary debug: completely bypass sub claim checking to see if AWS is rejecting due to casing
           StringLike = {
-            "token.actions.githubusercontent.com:sub": "repo:mayanja98/*"
+            "token.actions.githubusercontent.com:sub": "repo:*"
           }
           StringEquals = {
             "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"

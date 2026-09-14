@@ -7,3 +7,8 @@ output "api_url" {
   value       = "http://${aws_lb.backend.dns_name}"
   description = "Public URL of the Backend API Load Balancer"
 }
+
+output "github_actions_role_arn" {
+  value       = aws_iam_role.github_actions.arn
+  description = "The ARN to save in GitHub Secrets as AWS_ROLE_ARN"
+}

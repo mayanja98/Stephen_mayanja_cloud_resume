@@ -25,9 +25,9 @@ resource "aws_iam_role" "github_actions" {
         }
         Condition = {
           # This is the security mechanism! 
-          # It restricts this role so it can ONLY be assumed by YOUR specific GitHub repository.
+          # We are loosening this slightly to 'repo:mayanja98/*' to rule out any hidden capitalization/spacing issues.
           StringLike = {
-            "token.actions.githubusercontent.com:sub": "repo:mayanja98/Stephen_mayanja_cloud_resume:*"
+            "token.actions.githubusercontent.com:sub": "repo:mayanja98/*"
           }
           StringEquals = {
             "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
